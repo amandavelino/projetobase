@@ -1,0 +1,14 @@
+//Compass
+@import "compass";
+@import "compass/reset";
+
+//Fonts 
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab);
+
+//Core partials
+@import "variables";
+@import "mixins";
+@import "layout";
+
+//Core modules - sessoes/paginas do site
+@import "modules/header.scss";

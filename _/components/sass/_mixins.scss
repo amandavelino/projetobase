@@ -1,0 +1,141 @@
+//imagem 100% em width e 100 de viewport se nao especificar a height
+@mixin backImage($image, $height: 100vh, $bgPos: center center) {
+    background: linear-gradient( to bottom,
+        rgba(0,0,0,0),
+        rgba(0,0,0,.6)),
+        url($image);
+    background-repeat: no-repeat;
+    background-position: $bgPos;
+    background-size: cover;
+    height: $height;
+}
+
+//exemplo acima
+// .bridge {
+//     @include backImage(
+//         '../images/bridge.jpg',
+//         300px, center center);
+// }
+
+//chamar em substituicao do overflow:hidden isto no pai.
+//ex: ul { @include clearfix; } onde li {float:left}
+@mixin clearfix {
+    &:before,
+    &:after {
+        content: '';
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+//dividindo elementos dinamicamente e proporcional de acordo com o tamanho da width
+//$qtd: quantidade de elementos que se quer
+//$margin: margem em porcentagem entre os elementos
+@mixin imagegrid($qtd, $margin) {
+    width: ((100% - (($qtd - 1) * $margin))/$qtd);
+    &:nth-child(n) {
+        margin-right: $margin;
+        margin-bottom: $margin;
+    }
+    &:nth-child(#{$qtd}n) {
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+}
+
+//scss para exemplo acima
+
+//    .grid {
+//        @include clearfix; //este mixin se encontra em _mixins.scss assim como os outros
+//        .item {
+//            float: left;
+//            @include imagegrid(3, 2%);
+//        }
+//        img {
+//            display: block;
+//            //border-radius: nth($roundness, 1);
+//            max-width: 100%;
+//        }
+//    }
+
+//html para exemplo acima
+
+//    <div class="grid">
+//        <div class="item"><img src="http://placehold.it/500x500" alt="thumbnail"></div>
+//        <div class="item"><img src="http://placehold.it/500x500" alt="thumbnail"></div>
+//        <div class="item"><img src="http://placehold.it/500x500" alt="thumbnail"></div>
+//		  ...	
+//    </div>
+
+//truque para media-query
+//usar min-width -> largura da resolucao até o (min-width)
+//ex.: min-width:1000px, a resolução da tela até 1000px vai ter...
+//o estilo configurado (= @content) até a largura de 1000px...
+//abaixo disto o estilo não funciona mais
+//**************************************************************
+//max-width é ao contrário da menlr resolução e vai aumentando
+//ex.: max-width: 768px -> de 0px a 768px vai ter o estilo configurado (= @content)
+
+//opcao 1: apenas da resolucao até o min-width informado
+@mixin break($length) {
+    @media (min-width: $length) {
+        //da largura x até a largura mínima de $lentgh
+        //ex.: 1000px da largura x até 1000px abaixo disto já não funciona o código
+        //(@content) descrito aqui....
+        @content;
+    }
+}
+
+//opcao 2: da min resolucao até resolucao 'x'
+@mixin break($args...) {
+    @if length($args) == 1 {
+        @media (min-width: nth($args, 1)) {
+            @content;
+        }
+    } @else {
+        @media (min-width: nth($args, 1))
+            and (max-width: nth($args, 2)) {
+            @content;
+        }
+    }
+}
+
+//trabalhando com map data type (associative arrays)
+//
+//$color-btn: (
+//    default: $color-main,
+//    alerta: $red,
+//    sucesso: $green
+//);
+
+//@each $key,$value in $color-btn {
+//
+//    .btn-#{$key} {
+//        @extend %btn;
+//        background-color: $value;
+//    }
+//
+//}
+
+//classes invisiveis apenas como complemento de outras %*
+
+//    %btn {
+//    display: inline-block;
+//    padding: 6px 12px;
+//    text-align: center;
+//    white-space: nowrap;
+//    vertical-align: middle;
+//    cursor: pointer;
+//    border: none;
+//    border-radius: 4px;
+//    font-family: $font-highlight;
+//    user-select: none;
+//    color: $color-btn-text;
+//    }
+
+//    .btn-default {
+//        @extend %btn; //<<<<<<<< ver aqui <<<<<<<<<
+//        background: $color-btn-default;
+//    }
