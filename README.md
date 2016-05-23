@@ -40,6 +40,7 @@ Processo de Desenvolvimento iniciado em 19/05/2016 na Recife Sites
 
 	- [git](http://git-scm.com/)
 	- [gulp](http://gulpjs.com/)
+	- 	- Instale gulp.js através do terminal do Mac ou Gitbash no PC `> npm install -g gulp`
 	- [node.js](http://nodejs.org/)
 		- instalando gulp e browserify para dependencias: npm install -g gulp | npm install -g browserify
 	- [ruby]()
@@ -48,5 +49,4 @@ Processo de Desenvolvimento iniciado em 19/05/2016 na Recife Sites
 2. Copie este repositório para o seu local de trabalho usando o terminal (mac) ou Gitbash (PC) `> git clone https://github.com/amandavelino/projetobase.git`
 3. CD para a pasta `cd projetobase`
 4. Run `> npm-install` to install the project dependencies
-5. Instale gulp.js através do terminal do Mac ou Gitbash no PC `> npm install -g gulp`
 5. Rode o comando Gulp `> gulp`
